@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flame Barbershop | Classic Cuts & Shaves</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        flame: {
+                            400: '#f98d49',
+                            500: '#e86a33',
+                            600: '#d1531e',
+                        },
+                        dark: {
+                            DEFAULT: '#0f1311', // Deep charcoal/green from image
+                            light: '#1a201c',
+                            lighter: '#252d27'
+                        },
+                        warm: '#fdf1e5'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Utilities */
+        body {
+            background-color: #0f1311;
+            color: #fdf1e5;
+            overflow-x: hidden;
+        }
+        
+        .glass-nav {
+            background: rgba(15, 19, 17, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(253, 241, 229, 0.05);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(232, 106, 51, 0.4);
+        }
+
+        /* Hide elements before GSAP animations load */
+        .gsap-reveal {
+            visibility: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1311; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #252d27; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e86a33; 
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-flame-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="nav-item flex items-center gap-2 group">
+                <i data-lucide="flame" class="text-flame-500 w-8 h-8 group-hover:text-flame-400 transition-colors"></i>
+                <span class="font-display font-bold text-2xl tracking-wider uppercase text-warm">Flame</span>
+            </a>
+            
+            <div class="hidden md:flex gap-8 items-center font-sans text-sm tracking-widest uppercase">
+                <a href="#about" class="nav-item hover:text-flame-500 transition-colors">The Vibe</a>
+                <a href="#services" class="nav-item hover:text-flame-500 transition-colors">Services</a>
+                <a href="#gallery" class="nav-item hover:text-flame-500 transition-colors">Gallery</a>
+            </div>
+            
+            <a href="#book" class="nav-item hidden md:inline-flex items-center justify-center px-6 py-2.5 border border-flame-500 text-flame-500 hover:bg-flame-500 hover:text-white transition-all duration-300 font-sans text-sm tracking-wider uppercase rounded-sm">
+                Book Now
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-warm nav-item">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=2000" alt="Barbershop Background" class="w-full h-full object-cover object-center opacity-40 scale-105" id="hero-bg" />
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-dark"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-dark/90 via-transparent to-dark/90"></div>
+        </div>
+
+        <div class="relative z-10 text-center max-w-4xl px-6 pt-20">
+            <div class="hero-elem flex justify-center mb-6">
+                <i data-lucide="scissors" class="text-flame-500 w-10 h-10"></i>
+            </div>
+            <h1 class="hero-elem font-serif text-5xl md:text-7xl lg:text-8xl text-warm mb-6 leading-tight text-glow">
+                Mastering the Art <br> <span class="text-flame-500 italic text-4xl md:text-6xl lg:text-7xl">of the Classic Cut</span>
+            </h1>
+            <p class="hero-elem font-sans text-lg md:text-xl text-warm/70 mb-10 max-w-2xl mx-auto font-light">
+                Experience precision grooming in a relaxed, vintage atmosphere. Where old-school traditions meet modern style.
+            </p>
+            <div class="hero-elem flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#book" class="w-full sm:w-auto px-8 py-4 bg-flame-500 hover:bg-flame-600 text-white font-sans tracking-widest uppercase text-sm transition-all duration-300 shadow-lg shadow-flame-500/20 rounded-sm">
+                    Book an Appointment
+                </a>
+                <a href="#services" class="w-full sm:w-auto px-8 py-4 border border-warm/20 hover:border-warm text-warm font-sans tracking-widest uppercase text-sm transition-all duration-300 rounded-sm">
+                    View Services
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 hero-elem flex flex-col items-center gap-2">
+            <span class="text-xs uppercase tracking-[0.2em] text-warm/50 font-sans">Scroll</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-flame-500 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- The Vibe (About) Section -->
+    <section id="about" class="py-24 relative bg-dark">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div class="relative order-2 lg:order-1 gs-reveal-left">
+                    <div class="absolute -inset-4 border border-flame-500/30 rounded-sm transform translate-x-4 translate-y-4"></div>
+                    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1000" alt="Barber cutting hair" class="relative z-10 w-full h-[600px] object-cover rounded-sm filter brightness-90 contrast-125" />
+                    <div class="absolute bottom-0 right-0 z-20 bg-dark p-6 border-t border-l border-flame-500/30 transform translate-x-6 translate-y-6">
+                        <p class="font-display text-4xl text-flame-500 font-bold">15+</p>
+                        <p class="font-sans text-sm tracking-wider uppercase text-warm/70 mt-1">Years of Craft</p>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2 gs-reveal-right">
+                    <h2 class="font-display text-flame-500 text-sm tracking-[0.3em] uppercase mb-4">The Flame Vibe</h2>
+                    <h3 class="font-serif text-4xl md:text-5xl text-warm mb-6 leading-tight">More than a haircut. <br>It's an <span class="italic text-flame-500">experience.</span></h3>
+                    <div class="w-20 h-[1px] bg-flame-500 mb-8"></div>
+                    <p class="font-sans text-warm/70 leading-relaxed mb-6 font-light">
+                        At Flame Barbershop, we believe in the timeless ritual of men's grooming. Surrounded by warm amber lights, rich wood textures, and the hum of clippers, you'll find a sanctuary designed for the modern gentleman.
+                    </p>
+                    <p class="font-sans text-warm/70 leading-relaxed mb-10 font-light">
+                        Whether you need a sharp fade, a classic scissor cut, or a relaxing hot towel shave, our master barbers deliver precision and unparalleled attention to detail.
+                    </p>
+                    
+                    <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="coffee" class="text-flame-500 w-6 h-6"></i>
+                            <span class="font-sans text-sm text-warm">Complimentary Drink</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="music" class="text-flame-500 w-6 h-6"></i>
+                            <span class="font-sans text-sm text-warm">Curated Playlist</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-dark-light relative border-y border-white/5">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-5 mix-blend-overlay"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            
+            <div class="text-center mb-20 gs-fade-up">
+                <i data-lucide="scissors-line-dashed" class="mx-auto text-flame-500 w-8 h-8 mb-4"></i>
+                <h2 class="font-display text-flame-500 text-sm tracking-[0.3em] uppercase mb-4">Our Craft</h2>
+                <h3 class="font-serif text-4xl md:text-5xl text-warm">Grooming Services</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 max-w-5xl mx-auto">
+                
+                <!-- Service Item -->
+                <div class="service-card group cursor-pointer gs-fade-up">
+                    <div class="flex justify-between items-end mb-2 border-b border-warm/10 pb-2 group-hover:border-flame-500/50 transition-colors">
+                        <h4 class="font-serif text-2xl text-warm group-hover:text-flame-400 transition-colors">The Classic Cut</h4>
+                        <span class="font-display text-xl text-flame-500">$45</span>
+                    </div>
+                    <p class="font-sans text-sm text-warm/60 font-light">Tailored haircut using clippers and shears, finished with styling and a hot neck shave.</p>
+                </div>
+
+                <!-- Service Item -->
+                <div class="service-card group cursor-pointer gs-fade-up">
+                    <div class="flex justify-between items-end mb-2 border-b border-warm/10 pb-2 group-hover:border-flame-500/50 transition-colors">
+                        <h4 class="font-serif text-2xl text-warm group-hover:text-flame-400 transition-colors">Skin Fade</h4>
+                        <span class="font-display text-xl text-flame-500">$50</span>
+                    </div>
+                    <p class="font-sans text-sm text-warm/60 font-light">Precision bald fade tapering down to the skin, custom styled to your preference.</p>
+                </div>
+
+                <!-- Service Item -->
+                <div class="service-card group cursor-pointer gs-fade-up">
+                    <div class="flex justify-between items-end mb-2 border-b border-warm/10 pb-2 group-hover:border-flame-500/50 transition-colors">
+                        <h4 class="font-serif text-2xl text-warm group-hover:text-flame-400 transition-colors">Beard Sculpting</h4>
+                        <span class="font-display text-xl text-flame-500">$30</span>
+                    </div>
+                    <p class="font-sans text-sm text-warm/60 font-light">Detailed beard shaping, line-up with a straight razor, and nourishing beard oil treatment.</p>
+                </div>
+
+                <!-- Service Item -->
+                <div class="service-card group cursor-pointer gs-fade-up">
+                    <div class="flex justify-between items-end mb-2 border-b border-warm/10 pb-2 group-hover:border-flame-500/50 transition-colors">
+                        <h4 class="font-serif text-2xl text-warm group-hover:text-flame-400 transition-colors">Hot Towel Shave</h4>
+                        <span class="font-display text-xl text-flame-500">$40</span>
+                    </div>
+                    <p class="font-sans text-sm text-warm/60 font-light">Traditional straight razor face shave with pre-shave oil, hot towels, and soothing aftershave.</p>
+                </div>
+
+                <!-- Service Item -->
+                <div class="service-card group cursor-pointer gs-fade-up md:col-span-2">
+                    <div class="flex justify-between items-end mb-2 border-b border-warm/10 pb-2 group-hover:border-flame-500/50 transition-colors">
+                        <h4 class="font-serif text-2xl text-warm group-hover:text-flame-400 transition-colors">The Flame Signature Package</h4>
+                        <span class="font-display text-xl text-flame-500">$80</span>
+                    </div>
+                    <p class="font-sans text-sm text-warm/60 font-light">The ultimate experience. Includes The Classic Cut, Hot Towel Shave or Beard Sculpting, and a relaxing scalp massage.</p>
+                </div>
+
+            </div>
+            
+            <div class="mt-20 text-center gs-fade-up">
+                <a href="#book" class="inline-flex items-center gap-2 text-flame-500 hover:text-white font-sans tracking-widest uppercase text-sm transition-colors border-b border-flame-500 hover:border-white pb-1">
+                    Book Your Chair <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Divider / Quote -->
+    <section class="py-32 relative bg-dark overflow-hidden flex items-center justify-center">
+        <!-- Parallax Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=2000" alt="Barber Tools" class="w-full h-full object-cover object-center opacity-20" id="parallax-bg" />
+            <div class="absolute inset-0 bg-dark/70"></div>
+        </div>
+        <div class="relative z-10 text-center px-6 max-w-4xl gs-scale-up">
+            <i data-lucide="quote" class="w-12 h-12 mx-auto text-flame-500/50 mb-6"></i>
+            <h3 class="font-serif text-3xl md:text-5xl text-warm leading-snug italic">
+                "A good haircut isn't just about looking sharp. It's about how you feel when you walk out the door."
+            </h3>
+        </div>
+    </section>
+
+    <!-- Footer & Booking Info -->
+    <footer id="book" class="bg-dark-lighter pt-24 pb-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                
+                <!-- Brand Info -->
+                <div class="lg:col-span-1 gs-footer-item">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <i data-lucide="flame" class="text-flame-500 w-8 h-8"></i>
+                        <span class="font-display font-bold text-2xl tracking-wider uppercase text-warm">Flame</span>
+                    </a>
+                    <p class="font-sans text-sm text-warm/50 font-light mb-6">
+                        Reviving the tradition of the classic barbershop with modern expertise and unmatched atmosphere.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-warm/50 hover:text-flame-500 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-warm/50 hover:text-flame-500 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-warm/50 hover:text-flame-500 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="gs-footer-item">
+                    <h4 class="font-serif text-xl text-warm mb-6">Visit Us</h4>
+                    <ul class="space-y-4 font-sans text-sm text-warm/60 font-light">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-flame-500 flex-shrink-0 mt-0.5"></i>
+                            <span>123 Vintage Avenue,<br>The Artisan District,<br>NY 10012</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-flame-500 flex-shrink-0"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-flame-500 flex-shrink-0"></i>
+                            <span>hello@flamebarbers.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hours -->
+                <div class="gs-footer-item">
+                    <h4 class="font-serif text-xl text-warm mb-6">Opening Hours</h4>
+                    <ul class="space-y-3 font-sans text-sm text-warm/60 font-light">
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span>Monday</span> <span class="text-flame-500">Closed</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span>Tue - Fri</span> <span>9:00 AM - 8:00 PM</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span>Saturday</span> <span>8:00 AM - 6:00 PM</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sunday</span> <span>10:00 AM - 4:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CTA -->
+                <div class="gs-footer-item">
+                    <h4 class="font-serif text-xl text-warm mb-6">Ready to look sharp?</h4>
+                    <p class="font-sans text-sm text-warm/50 font-light mb-6">
+                        Walk-ins are welcome, but appointments are highly recommended to secure your spot.
+                    </p>
+                    <button class="w-full px-6 py-4 bg-flame-500 hover:bg-flame-600 text-white font-sans tracking-widest uppercase text-sm transition-all duration-300 rounded-sm">
+                        Book Now
+                    </button>
+                </div>
+
+            </div>
+            
+            <div class="text-center pt-8 border-t border-white/5 font-sans text-xs text-warm/40 tracking-wider">
+                &copy; 2026 Flame Barbershop. All rights reserved. Crafted with precision.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Icons & GSAP -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Animations ---
+
+        // Navbar blur effect on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.background = 'rgba(15, 19, 17, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.background = 'rgba(15, 19, 17, 0.85)';
+            }
+        });
+
+        // Hero Section Initial Load Animation
+        const masterTl = gsap.timeline();
+
+        // Animate background slow zoom
+        gsap.to("#hero-bg", {
+            scale: 1,
+            duration: 10,
+            ease: "power1.out"
+        });
+
+        masterTl.from(".nav-item", {
+            y: -20,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            delay: 0.2
+        })
+        .from(".hero-elem", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out"
+        }, "-=0.4");
+
+
+        // ScrollTrigger Animations for Sections
+
+        // Slide from left (About Image)
+        gsap.from(".gs-reveal-left", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+            },
+            x: -60,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        // Slide from right (About Text)
+        gsap.from(".gs-reveal-right", {
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+            },
+            x: 60,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out"
+        });
+
+        // Fade up Services
+        gsap.utils.toArray(".gs-fade-up").forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 85%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+        });
+
+        // Parallax background on quote section
+        gsap.to("#parallax-bg", {
+            scrollTrigger: {
+                trigger: "#parallax-bg",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            },
+            y: 150,
+            ease: "none"
+        });
+
+        // Scale up quote
+        gsap.from(".gs-scale-up", {
+            scrollTrigger: {
+                trigger: ".gs-scale-up",
+                start: "top 80%",
+            },
+            scale: 0.9,
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            ease: "back.out(1.7)"
+        });
+
+        // Footer items stagger fade
+        gsap.from(".gs-footer-item", {
+            scrollTrigger: {
+                trigger: "footer",
+                start: "top 90%",
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out"
+        });
+
+    </script>
+</body>
+</html>
