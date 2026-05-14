@@ -106,26 +106,26 @@ function googleTranslateElementInit() {
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="nav-item flex items-center gap-2 group">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative z-10">
+            <a href="#" class="nav-item flex items-center gap-2 group relative z-50">
                 <i data-lucide="flame" class="text-flame-500 w-8 h-8 group-hover:text-flame-400 transition-colors"></i>
                 <span class="font-display font-bold text-2xl tracking-wider uppercase text-warm">Flame</span>
             </a>
             
-            <div class="hidden md:flex gap-8 items-center font-sans text-sm tracking-widest uppercase">
+            <div class="hidden md:flex gap-8 items-center font-sans text-sm tracking-widest uppercase relative z-50">
                 <a href="#about" class="nav-item hover:text-flame-500 transition-colors">The Vibe</a>
                 <a href="#services" class="nav-item hover:text-flame-500 transition-colors">Services</a>
                 <a href="#gallery" class="nav-item hover:text-flame-500 transition-colors">Gallery</a>
             </div>
             
-            <div class="flex items-center gap-3 sm:gap-4">
-                <a href="#book" class="nav-item inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-flame-500 text-white hover:bg-flame-600 shadow-lg shadow-flame-500/20 transition-all duration-300 font-sans text-xs sm:text-sm tracking-wider uppercase rounded-sm whitespace-nowrap">
+            <div class="flex items-center gap-3 sm:gap-4 relative z-50">
+                <a href="#book" class="inline-flex items-center justify-center px-4 py-2 sm:px-6 sm:py-2.5 bg-flame-500 text-white hover:bg-flame-600 shadow-lg shadow-flame-500/20 transition-all duration-300 font-sans text-xs sm:text-sm tracking-wider uppercase rounded-sm whitespace-nowrap">
                     <span class="sm:hidden">Book</span>
                     <span class="hidden sm:inline">Book Appointment</span>
                 </a>
 
                 <!-- Mobile Menu Button -->
-                <button class="md:hidden text-warm nav-item ml-2">
+                <button class="md:hidden text-warm ml-2">
                     <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
